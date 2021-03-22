@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gdc_hospital_app/navigation/bottomNavBar.dart';
 import 'package:gdc_hospital_app/screens/onBoarding.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -12,9 +13,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Emergency App',
       theme: ThemeData(
-        // primarySwatch: Colors.purple,
         primaryColor: Colors.white,
         backgroundColor: Color.fromRGBO(255, 255, 255, 1),
         indicatorColor: Color(0x65079E),
@@ -28,18 +28,14 @@ class MyApp extends StatelessWidget {
         cardColor: Color(0xFF151515),
         canvasColor: Colors.grey[50],
         brightness: Brightness.light,
-        buttonTheme: Theme.of(context)
-            .buttonTheme
-            .copyWith(colorScheme: ColorScheme.light()),
+        buttonTheme: Theme.of(context).buttonTheme.copyWith(colorScheme: ColorScheme.light()),
         appBarTheme: AppBarTheme(
           elevation: 0.0,
         ),
       ),
-      // Styles.themeData(false, context),
-      // ThemeData(
-      //   primarySwatch: Colors.blue,
-      // ),
-      home: OnBoarding(),
+      home:
+          // BottomNavBar(),
+          OnBoarding(),
     );
   }
 }

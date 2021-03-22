@@ -66,7 +66,7 @@ class _OnBoardingState extends State<OnBoarding> {
                       primary: Color.fromRGBO(251, 245, 255, 1),
                     ),
                     onPressed: () {
-                      Get.off(SignInScreen());
+                      Get.off(() => SignInScreen());
                     },
                     child: Text(
                       "Sign In",
@@ -88,7 +88,7 @@ class _OnBoardingState extends State<OnBoarding> {
                       elevation: 0,
                     ),
                     onPressed: () {
-                      Get.off(SignUpScreen());
+                      Get.off(() => SignUpScreen());
                     },
                     child: Text(
                       "Sign Up",

@@ -1,18 +1,18 @@
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gdc_hospital_app/controllers/homeController.dart';
-import 'package:gdc_hospital_app/screens/authScreens/signUpScreen.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:gdc_hospital_app/screens/authScreens/signInScreen.dart';
 import 'package:gdc_hospital_app/utils/margin.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignInScreen extends StatelessWidget {
-  final HomeController controller = Get.put(HomeController());
+class SignUpScreen extends StatefulWidget {
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
 
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,30 +50,16 @@ class SignInScreen extends StatelessWidget {
             YMargin(20),
             Container(
               padding: EdgeInsets.only(left: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Welcome back!",
-                    style: GoogleFonts.manrope(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                      color: Color.fromRGBO(97, 97, 97, 1),
-                    ),
-                  ),
-                  Text(
-                    "Let's sign you in.",
-                    style: GoogleFonts.manrope(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 26,
-                      color: Color.fromRGBO(0, 0, 0, 1),
-                    ),
-                  ),
-                ],
+              child: Text(
+                "Sign up",
+                style: GoogleFonts.manrope(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 26,
+                  color: Color.fromRGBO(0, 0, 0, 1),
+                ),
               ),
             ),
-            YMargin(25),
+            YMargin(15),
             Container(
               height: 48,
               width: 362,
@@ -108,7 +94,7 @@ class SignInScreen extends StatelessWidget {
                 ),
               ),
             ),
-            YMargin(25),
+            YMargin(15),
             Container(
               child: Row(
                 children: [
@@ -146,14 +132,13 @@ class SignInScreen extends StatelessWidget {
                     ),
                     child: TextField(
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person_outline,
-                            size: 20, color: Colors.black),
+                        prefixIcon: Icon(Icons.person_outline, size: 20, color: Colors.black),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
-                        hintText: "Username or email",
+                        hintText: "Username",
                         hintStyle: GoogleFonts.manrope(
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
@@ -172,8 +157,32 @@ class SignInScreen extends StatelessWidget {
                     ),
                     child: TextField(
                       decoration: InputDecoration(
-                        prefixIcon: Icon(FeatherIcons.lock,
-                            size: 20, color: Colors.black),
+                        prefixIcon: Icon(FeatherIcons.mail, size: 20, color: Colors.black),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        hintText: "Email",
+                        hintStyle: GoogleFonts.manrope(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: Color.fromRGBO(121, 121, 121, 1),
+                        ),
+                      ),
+                    ),
+                  ),
+                  YMargin(20),
+                  Container(
+                    width: double.infinity,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color.fromRGBO(245, 245, 245, 1),
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(FeatherIcons.lock, size: 20, color: Colors.black),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         enabledBorder: InputBorder.none,
@@ -196,17 +205,40 @@ class SignInScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       color: Color.fromRGBO(245, 245, 245, 1),
                     ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(FeatherIcons.lock, size: 20, color: Colors.black),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        hintText: "Confirm password",
+                        hintStyle: GoogleFonts.manrope(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: Color.fromRGBO(121, 121, 121, 1),
+                        ),
+                      ),
+                    ),
+                  ),
+                  YMargin(20),
+                  Container(
+                    width: double.infinity,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color.fromRGBO(245, 245, 245, 1),
+                    ),
                     child: TextButton(
                       style: TextButton.styleFrom(
                           backgroundColor: Theme.of(context).buttonColor,
                           primary: Theme.of(context).buttonColor),
                       onPressed: () {},
                       child: Text(
-                        "Sign In",
+                        "Create account",
                         style: GoogleFonts.manrope(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                            color: Colors.white),
+                            fontWeight: FontWeight.w600, fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ),
@@ -222,7 +254,7 @@ class SignInScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Don't have an account?   ",
+                    "Already have an account?   ",
                     style: GoogleFonts.manrope(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -231,10 +263,10 @@ class SignInScreen extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.off(SignUpScreen());
+                      Get.off(() => SignInScreen());
                     },
                     child: Text(
-                      "Sign up here",
+                      "Sign in here",
                       style: GoogleFonts.manrope(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
