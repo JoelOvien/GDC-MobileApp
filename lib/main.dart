@@ -33,9 +33,8 @@ class MyApp extends StatelessWidget {
           elevation: 0.0,
         ),
       ),
-      home:
-          // BottomNavBar(),
-          OnBoarding(),
+      home: BottomNavBar(),
+      // OnBoarding(),
     );
   }
 }
