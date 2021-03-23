@@ -20,6 +20,7 @@ class _HomeState extends State<Home> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         toolbarHeight: 30,
         backgroundColor: Colors.white,
@@ -217,7 +218,85 @@ class _HomeState extends State<Home> {
                     )
                   : GestureDetector(
                       onTap: () {
-                        Get.bottomSheet(Container());
+                        Get.bottomSheet(
+                          Container(
+                            padding: EdgeInsets.only(top: 18, left: 15, right: 10, bottom: 15),
+                            height: height * 0.25,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(17, 0, 27, 1),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(8),
+                                topRight: Radius.circular(8),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Select call type",
+                                  style: GoogleFonts.manrope(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                    color: Color.fromRGBO(101, 7, 158, 1),
+                                  ),
+                                ),
+                                YMargin(15),
+                                GestureDetector(
+                                  onTap: () {
+                                    print("voice");
+                                  },
+                                  child: Container(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.phone,
+                                          color: Color.fromRGBO(101, 7, 158, 1),
+                                        ),
+                                        XMargin(10),
+                                        Text(
+                                          "Voice call",
+                                          style: GoogleFonts.manrope(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                YMargin(12),
+                                GestureDetector(
+                                  onTap: () {
+                                    print("video");
+                                  },
+                                  child: Container(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.video_call,
+                                          color: Color.fromRGBO(101, 7, 158, 1),
+                                        ),
+                                        XMargin(10),
+                                        Text(
+                                          "Video call",
+                                          style: GoogleFonts.manrope(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // backgroundColor: Color.fromRGBO(27, 27, 27, 0.53),
+                          // barrierColor: Color.fromRGBO(27, 27, 27, 0.53),
+                        );
+
                         print("fuckk");
                       },
                       child: Center(
