@@ -17,12 +17,12 @@ class Styles {
       hoverColor: isDarkTheme ? Color(0xff3A3A3B) : Color(0x65079E),
       focusColor: isDarkTheme ? Color(0xff0B2512) : Color(0x65079E),
       disabledColor: Colors.grey,
-      textSelectionColor: isDarkTheme ? Colors.white : Colors.black,
       cardColor: !isDarkTheme ? Color(0xFF151515) : Colors.white,
       canvasColor: isDarkTheme ? Colors.black : Colors.grey[50],
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,
-      buttonTheme: Theme.of(context).buttonTheme.copyWith(
-          colorScheme: isDarkTheme ? ColorScheme.dark() : ColorScheme.light()),
+      buttonTheme: Theme.of(context)
+          .buttonTheme
+          .copyWith(colorScheme: isDarkTheme ? ColorScheme.dark() : ColorScheme.light()),
       appBarTheme: AppBarTheme(
         elevation: 0.0,
       ),

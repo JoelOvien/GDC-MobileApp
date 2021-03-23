@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gdc_hospital_app/navigation/bottomNavBar.dart';
 import 'package:gdc_hospital_app/screens/onBoarding.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -24,7 +23,6 @@ class MyApp extends StatelessWidget {
         hoverColor: Color(0x65079E),
         focusColor: Color(0x65079E),
         disabledColor: Colors.grey,
-        textSelectionColor: Colors.black,
         cardColor: Color(0xFF151515),
         canvasColor: Colors.grey[50],
         brightness: Brightness.light,
@@ -33,8 +31,7 @@ class MyApp extends StatelessWidget {
           elevation: 0.0,
         ),
       ),
-      home: BottomNavBar(),
-      // OnBoarding(),
+      home: OnBoarding(),
     );
   }
 }

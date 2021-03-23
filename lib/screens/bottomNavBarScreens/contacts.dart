@@ -5,8 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/margin.dart';
-import '../../utils/margin.dart';
-import '../../utils/margin.dart';
 
 class ContactScreen extends StatefulWidget {
   @override
@@ -14,7 +12,7 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
-  List<String> contactList = ["yooo"];
+  List<String> contactList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
