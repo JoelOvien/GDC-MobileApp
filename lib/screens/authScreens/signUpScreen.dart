@@ -1,8 +1,10 @@
-import 'package:feather_icons_flutter/feather_icons_flutter.dart';
+import 'package:eas/core/view.models/authVM.dart';
+import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:gdc_hospital_app/screens/authScreens/signInScreen.dart';
-import 'package:gdc_hospital_app/utils/margin.dart';
+import 'package:eas/utils/margin.dart';
+import 'package:eas/screens/authScreens/signInScreen.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +15,13 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _passwordController2 = TextEditingController();
+
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +56,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
             ),
-            YMargin(20),
+            YMargin(
+              screenHeight(context, percent: 0.05),
+            ),
             Container(
               padding: EdgeInsets.only(left: 10),
               child: Text(
@@ -59,190 +70,189 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             ),
-            YMargin(15),
-            Container(
-              height: 48,
-              width: 362,
-              padding: EdgeInsets.only(left: 10, right: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  primary: Color.fromRGBO(245, 245, 245, 1),
-                ),
-                onPressed: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            YMargin(
+              screenHeight(context, percent: 0.05),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0, right: 10),
+              child: Form(
+                key: _formKey,
+                child: Column(
                   children: [
-                    SvgPicture.asset(
-                      "assets/svgs/google.svg",
-                      height: 22,
-                      width: 22,
+                    Container(
+                      // width: double.infinity,
+                      // height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromRGBO(245, 245, 245, 1),
+                      ),
+                      child: TextFormField(
+                        controller: _nameController,
+                        validator: MinLengthValidator(2, errorText: "Enter your name or username"),
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.person_outline, size: 20, color: Colors.black),
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          hintText: "Username",
+                          hintStyle: GoogleFonts.manrope(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Color.fromRGBO(121, 121, 121, 1),
+                          ),
+                        ),
+                      ),
                     ),
-                    SizedBox(width: 10),
-                    Text(
-                      "sign in with Google",
-                      style: GoogleFonts.manrope(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                        color: Color.fromRGBO(49, 49, 49, 1),
+                    YMargin(20),
+                    Container(
+                      // width: double.infinity,
+                      // height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromRGBO(245, 245, 245, 1),
+                      ),
+                      child: TextFormField(
+                        validator: MultiValidator([
+                          EmailValidator(errorText: "Enter a valid email address"),
+                          RequiredValidator(errorText: "email is required"),
+                        ]),
+                        keyboardType: TextInputType.emailAddress,
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(FeatherIcons.mail, size: 20, color: Colors.black),
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          hintText: "Email",
+                          hintStyle: GoogleFonts.manrope(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Color.fromRGBO(121, 121, 121, 1),
+                          ),
+                        ),
+                      ),
+                    ),
+                    YMargin(20),
+                    Container(
+                      // width: double.infinity,
+                      // height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromRGBO(245, 245, 245, 1),
+                      ),
+                      child: TextFormField(
+                        validator: MinLengthValidator(9, errorText: "Enter your phone number"),
+                        controller: _phoneController,
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(FeatherIcons.phone, size: 20, color: Colors.black),
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          hintText: "Phone Number",
+                          hintStyle: GoogleFonts.manrope(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Color.fromRGBO(121, 121, 121, 1),
+                          ),
+                        ),
+                      ),
+                    ),
+                    YMargin(20),
+                    Container(
+                      // width: double.infinity,
+                      // height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromRGBO(245, 245, 245, 1),
+                      ),
+                      child: TextFormField(
+                        obscureText: true,
+                        validator: MinLengthValidator(4,
+                            errorText: "Password must be more up to 4 characters long"),
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(FeatherIcons.lock, size: 20, color: Colors.black),
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          hintText: "Password",
+                          hintStyle: GoogleFonts.manrope(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Color.fromRGBO(121, 121, 121, 1),
+                          ),
+                        ),
+                      ),
+                    ),
+                    YMargin(20),
+                    Container(
+                      // width: double.infinity,
+                      // height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromRGBO(245, 245, 245, 1),
+                      ),
+                      child: TextFormField(
+                        obscureText: true,
+                        validator: (val) => MatchValidator(errorText: 'passwords do not match')
+                            .validateMatch(val, _passwordController.text),
+                        controller: _passwordController2,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(FeatherIcons.lock, size: 20, color: Colors.black),
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          hintText: "Confirm password",
+                          hintStyle: GoogleFonts.manrope(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Color.fromRGBO(121, 121, 121, 1),
+                          ),
+                        ),
+                      ),
+                    ),
+                    YMargin(20),
+                    Container(
+                      width: double.infinity,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromRGBO(245, 245, 245, 1),
+                      ),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                            backgroundColor: Theme.of(context).buttonColor,
+                            primary: Theme.of(context).buttonColor),
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            AuthVM().signUp(
+                              _nameController.text.toString(),
+                              _phoneController.text.toString(),
+                              _emailController.text.toString(),
+                              _passwordController.text.toString(),
+                            );
+                          }
+                        },
+                        child: Text(
+                          "Create account",
+                          style: GoogleFonts.manrope(
+                              fontWeight: FontWeight.w600, fontSize: 18, color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
-            YMargin(15),
-            Container(
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 5),
-                    child: Container(
-                      width: 152,
-                      height: 1,
-                      color: Color.fromRGBO(202, 202, 202, 1),
-                    ),
-                  ),
-                  Text("Or"),
-                  Padding(
-                    padding: EdgeInsets.only(left: 5, right: 0),
-                    child: Container(
-                      width: 162,
-                      height: 1,
-                      color: Color.fromRGBO(202, 202, 202, 1),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            YMargin(25),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10),
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color.fromRGBO(245, 245, 245, 1),
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person_outline, size: 20, color: Colors.black),
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        hintText: "Username",
-                        hintStyle: GoogleFonts.manrope(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Color.fromRGBO(121, 121, 121, 1),
-                        ),
-                      ),
-                    ),
-                  ),
-                  YMargin(20),
-                  Container(
-                    width: double.infinity,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color.fromRGBO(245, 245, 245, 1),
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(FeatherIcons.mail, size: 20, color: Colors.black),
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        hintText: "Email",
-                        hintStyle: GoogleFonts.manrope(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Color.fromRGBO(121, 121, 121, 1),
-                        ),
-                      ),
-                    ),
-                  ),
-                  YMargin(20),
-                  Container(
-                    width: double.infinity,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color.fromRGBO(245, 245, 245, 1),
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(FeatherIcons.lock, size: 20, color: Colors.black),
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        hintText: "Password",
-                        hintStyle: GoogleFonts.manrope(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Color.fromRGBO(121, 121, 121, 1),
-                        ),
-                      ),
-                    ),
-                  ),
-                  YMargin(20),
-                  Container(
-                    width: double.infinity,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color.fromRGBO(245, 245, 245, 1),
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(FeatherIcons.lock, size: 20, color: Colors.black),
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        hintText: "Confirm password",
-                        hintStyle: GoogleFonts.manrope(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Color.fromRGBO(121, 121, 121, 1),
-                        ),
-                      ),
-                    ),
-                  ),
-                  YMargin(20),
-                  Container(
-                    width: double.infinity,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color.fromRGBO(245, 245, 245, 1),
-                    ),
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                          backgroundColor: Theme.of(context).buttonColor,
-                          primary: Theme.of(context).buttonColor),
-                      onPressed: () {},
-                      child: Text(
-                        "Create account",
-                        style: GoogleFonts.manrope(
-                            fontWeight: FontWeight.w600, fontSize: 18, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ),
             YMargin(25),

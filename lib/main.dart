@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gdc_hospital_app/screens/onBoarding.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'screens/onBoarding.dart';
 
 void main() {
   runApp(MyApp());

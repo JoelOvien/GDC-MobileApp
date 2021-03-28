@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gdc_hospital_app/screens/bottomNavBarScreens/contacts.dart';
-import 'package:gdc_hospital_app/screens/bottomNavBarScreens/home.dart';
-import 'package:gdc_hospital_app/screens/bottomNavBarScreens/settings.dart';
+import 'package:eas/screens/bottomNavBarScreens/settings.dart';
+import 'package:eas/screens/bottomNavBarScreens/contacts.dart';
+import 'package:eas/screens/bottomNavBarScreens/home.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override

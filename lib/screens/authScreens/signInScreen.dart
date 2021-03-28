@@ -1,19 +1,23 @@
-import 'package:feather_icons_flutter/feather_icons_flutter.dart';
+import 'package:eas/core/controllers/authController.dart';
+import 'package:eas/core/controllers/homeController.dart';
+import 'package:eas/core/view.models/authVM.dart';
+import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gdc_hospital_app/controllers/homeController.dart';
-import 'package:gdc_hospital_app/navigation/bottomNavBar.dart';
-import 'package:gdc_hospital_app/screens/authScreens/signUpScreen.dart';
-import 'package:gdc_hospital_app/utils/margin.dart';
+import 'package:eas/navigation/bottomNavBar.dart';
+import 'package:eas/screens/authScreens/signUpScreen.dart';
+import 'package:eas/utils/margin.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignInScreen extends StatelessWidget {
-  final HomeController controller = Get.put(HomeController());
-
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +52,9 @@ class SignInScreen extends StatelessWidget {
                 ],
               ),
             ),
-            YMargin(20),
+            YMargin(
+              screenHeight(context, percent: 0.05),
+            ),
             Container(
               padding: EdgeInsets.only(left: 10),
               child: Column(
@@ -74,142 +80,94 @@ class SignInScreen extends StatelessWidget {
                 ],
               ),
             ),
-            YMargin(25),
-            Container(
-              height: 48,
-              width: 362,
-              padding: EdgeInsets.only(left: 10, right: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  primary: Color.fromRGBO(245, 245, 245, 1),
-                ),
-                onPressed: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            YMargin(
+              screenHeight(context, percent: 0.1),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0, right: 10),
+              child: Form(
+                key: _formKey,
+                child: Column(
                   children: [
-                    SvgPicture.asset(
-                      "assets/svgs/google.svg",
-                      height: 22,
-                      width: 22,
+                    Container(
+                      // width: double.infinity,
+                      // height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromRGBO(245, 245, 245, 1),
+                      ),
+                      child: TextFormField(
+                        validator: EmailValidator(errorText: "Enter a valid email"),
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.person_outline, size: 20, color: Colors.black),
+                          border: InputBorder.none,
+                          hintText: "Username or email",
+                          hintStyle: GoogleFonts.manrope(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Color.fromRGBO(121, 121, 121, 1),
+                          ),
+                        ),
+                      ),
                     ),
-                    SizedBox(width: 10),
-                    Text(
-                      "sign in with Google",
-                      style: GoogleFonts.manrope(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                        color: Color.fromRGBO(49, 49, 49, 1),
+                    YMargin(20),
+                    Container(
+                      // padding: EdgeInsets.all(8),
+                      // width: double.infinity,
+                      // height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromRGBO(245, 245, 245, 1),
+                      ),
+                      child: Center(
+                        child: TextFormField(
+                          controller: _passwordController,
+                          validator: MinLengthValidator(3, errorText: "Enter a valid password"),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(FeatherIcons.lock, size: 20, color: Colors.black),
+                            border: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            hintText: "Password",
+                            hintStyle: GoogleFonts.manrope(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color: Color.fromRGBO(121, 121, 121, 1),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    YMargin(20),
+                    Container(
+                      width: double.infinity,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromRGBO(245, 245, 245, 1),
+                      ),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                            backgroundColor: Theme.of(context).buttonColor,
+                            primary: Theme.of(context).buttonColor),
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            AuthVM().signIn(
+                              _emailController.text.toString(),
+                              _passwordController.text.toString(),
+                            );
+                          }
+                        },
+                        child: Text(
+                          "Sign In",
+                          style: GoogleFonts.manrope(
+                              fontWeight: FontWeight.w600, fontSize: 18, color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
-            YMargin(25),
-            Container(
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 5),
-                    child: Container(
-                      width: 152,
-                      height: 1,
-                      color: Color.fromRGBO(202, 202, 202, 1),
-                    ),
-                  ),
-                  Text("Or"),
-                  Padding(
-                    padding: EdgeInsets.only(left: 5, right: 0),
-                    child: Container(
-                      width: 162,
-                      height: 1,
-                      color: Color.fromRGBO(202, 202, 202, 1),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            YMargin(25),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10),
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color.fromRGBO(245, 245, 245, 1),
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person_outline, size: 20, color: Colors.black),
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        hintText: "Username or email",
-                        hintStyle: GoogleFonts.manrope(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Color.fromRGBO(121, 121, 121, 1),
-                        ),
-                      ),
-                    ),
-                  ),
-                  YMargin(20),
-                  Container(
-                    width: double.infinity,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color.fromRGBO(245, 245, 245, 1),
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(FeatherIcons.lock, size: 20, color: Colors.black),
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        hintText: "Password",
-                        hintStyle: GoogleFonts.manrope(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Color.fromRGBO(121, 121, 121, 1),
-                        ),
-                      ),
-                    ),
-                  ),
-                  YMargin(20),
-                  Container(
-                    width: double.infinity,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color.fromRGBO(245, 245, 245, 1),
-                    ),
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                          backgroundColor: Theme.of(context).buttonColor,
-                          primary: Theme.of(context).buttonColor),
-                      onPressed: () {
-                        Get.offAll(() => BottomNavBar());
-                      },
-                      child: Text(
-                        "Sign In",
-                        style: GoogleFonts.manrope(
-                            fontWeight: FontWeight.w600, fontSize: 18, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ),
             YMargin(25),

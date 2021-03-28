@@ -1,6 +1,6 @@
 {
-    "name": "gdc_hospital_app",
-    "short_name": "gdc_hospital_app",
+    "name": "eas",
+    "short_name": "eas",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

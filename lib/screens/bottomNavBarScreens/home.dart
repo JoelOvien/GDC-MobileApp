@@ -1,6 +1,6 @@
+import 'package:eas/core/controllers/homeController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:gdc_hospital_app/controllers/homeController.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
