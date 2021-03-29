@@ -8,38 +8,16 @@ class GetContactsPage extends StatefulWidget {
   _GetContactsPageState createState() => _GetContactsPageState();
 }
 
-class _GetContactsPageState extends State<GetContactsPage> with AutomaticKeepAliveClientMixin {
-  List<Contact> _list = new List();
-  bool _isChecked = true;
-  List<Color> selected;
+class _GetContactsPageState extends State<GetContactsPage> {
+  List<Contact> _list = [];
   final EasyContactPicker _contactPicker = new EasyContactPicker();
-  Widget _getItemWithIndex(Contact contact) {
-    return ListTile(
-      dense: true,
-      title: Text(contact.fullName),
-      subtitle: Text(
-        contact.phoneNumber,
-        style: TextStyle(
-          color: Colors.grey,
-        ),
-      ),
-      trailing: CheckboxListTile(
-        value: _isChecked,
-        onChanged: (val) {
-          setState(() {
-            _isChecked = val;
-          });
-        },
-      ),
-    );
-  }
-
+  List<String> selectedNum = [];
   _openAddressBook() async {
-    // 申请权限
+    //check permission status
     Map<PermissionGroup, PermissionStatus> permissions =
         await PermissionHandler().requestPermissions([PermissionGroup.contacts]);
 
-    // 申请结果
+    // get permission status
     PermissionStatus permission =
         await PermissionHandler().checkPermissionStatus(PermissionGroup.contacts);
 
@@ -48,15 +26,13 @@ class _GetContactsPageState extends State<GetContactsPage> with AutomaticKeepAli
     }
   }
 
+//fecth contacts
   _getContactData() async {
     List<Contact> list = await _contactPicker.selectContacts();
     setState(() {
       _list = list;
     });
   }
-
-  @override
-  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -67,16 +43,160 @@ class _GetContactsPageState extends State<GetContactsPage> with AutomaticKeepAli
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("My Contacts"),
-        ),
-        body: ListView.builder(
-          itemBuilder: (context, index) {
-            selected = List.filled(_list.length, Colors.white);
-            return _getItemWithIndex(_list[index]);
-          },
-          itemCount: _list.length,
-        ));
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.save),
+        onPressed: () {
+          print(selectedNum);
+        },
+      ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("My Contacts"),
+      ),
+      body: ListView.builder(
+        itemCount: _list.length,
+        itemBuilder: (context, index) {
+          List _isChecked = List.filled(_list.length, false);
+
+          return StatefulBuilder(builder: (context, setState) {
+            return ListTile(
+              dense: true,
+              title: Text(_list[index].fullName),
+              subtitle: Text(
+                _list[index].phoneNumber,
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+              trailing: Checkbox(
+                value: _isChecked[index],
+                onChanged: (val) {
+                  if (_isChecked[index] != true) {
+                    print("just selected");
+                    selectedNum.add(_list[index].phoneNumber);
+                  } else {
+                    print("unselected");
+                    selectedNum.remove(_list[index].phoneNumber);
+                  }
+                  setState(() {
+                    _isChecked[index] = val;
+                  });
+                },
+              ),
+            );
+          });
+        },
+      ),
+    );
+  }
+  // Widget _getItemWithIndex(Contact contact) {
+  //                   // _getItemWithIndex(_list[index]);
+
+  //   return ListTile(
+  //     dense: true,
+  //     title: Text(contact.fullName),
+  //     subtitle: Text(
+  //       contact.phoneNumber,
+  //       style: TextStyle(
+  //         color: Colors.grey,
+  //       ),
+  //     ),
+  //     trailing: Checkbox(
+  //       value: _isChecked,
+  //       onChanged: (val) {
+  //         setState(() {
+  //           _isChecked = val;
+  //         });
+  //       },
+  //     ),
+  //   );
+  // }
+}
+
+class SignUpGetContactsPage extends StatefulWidget {
+  @override
+  _SignUpGetContactsPageState createState() => _SignUpGetContactsPageState();
+}
+
+class _SignUpGetContactsPageState extends State<SignUpGetContactsPage> {
+  List<Contact> _list = [];
+  final EasyContactPicker _contactPicker = new EasyContactPicker();
+  List<String> selectedNum = [];
+  _openAddressBook() async {
+    //check permission status
+    Map<PermissionGroup, PermissionStatus> permissions =
+        await PermissionHandler().requestPermissions([PermissionGroup.contacts]);
+
+    // get permission status
+    PermissionStatus permission =
+        await PermissionHandler().checkPermissionStatus(PermissionGroup.contacts);
+
+    if (permission == PermissionStatus.granted) {
+      _getContactData();
+    }
+  }
+
+//fecth contacts
+  _getContactData() async {
+    List<Contact> list = await _contactPicker.selectContacts();
+    setState(() {
+      _list = list;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _openAddressBook();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.save),
+        onPressed: () {
+          print(selectedNum);
+        },
+      ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("My Contacts"),
+      ),
+      body: ListView.builder(
+        itemCount: _list.length,
+        itemBuilder: (context, index) {
+          List _isChecked = List.filled(_list.length, false);
+
+          return StatefulBuilder(builder: (context, setState) {
+            return ListTile(
+              dense: true,
+              title: Text(_list[index].fullName),
+              subtitle: Text(
+                _list[index].phoneNumber,
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+              trailing: Checkbox(
+                value: _isChecked[index],
+                onChanged: (val) {
+                  if (_isChecked[index] != true) {
+                    print("just selected");
+                    selectedNum.add(_list[index].phoneNumber);
+                  } else {
+                    print("unselected");
+                    selectedNum.remove(_list[index].phoneNumber);
+                  }
+                  setState(() {
+                    _isChecked[index] = val;
+                  });
+                },
+              ),
+            );
+          });
+        },
+      ),
+    );
   }
 }
