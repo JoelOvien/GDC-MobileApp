@@ -23,17 +23,24 @@ class AuthVM {
     };
 
     try {
-      Future.delayed(Duration(seconds: 5), () {
+      final ioc = new HttpClient();
+      ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+      final http = new IOClient(ioc);
+      final response = await http.post(
+        url,
+        body: jsonEncode(body),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print(response.statusCode.toString());
+
+        print(response.body);
+
+        Get.offAll(BottomNavBar());
+      } else {
+        print(response.statusCode.toString());
+        print(response.body);
         Get.back();
-        // Get.offAll(BottomNavBar());
-      });
-      // final ioc = new HttpClient();
-      // ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-      // final http = new IOClient(ioc);
-      // final response = await http.post(
-      //   url,
-      //   body: jsonEncode(body),
-      // );
+      }
     } catch (e) {
       print(e.toString());
     }

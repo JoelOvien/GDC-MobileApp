@@ -1,7 +1,10 @@
 import 'dart:math';
-
+import 'package:eas/core/models/customContactModel.dart';
+import 'package:eas/screens/getContactsPage.dart';
+import 'package:eas/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/margin.dart';
@@ -12,7 +15,11 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
-  List<String> contactList = [];
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +86,9 @@ class _ContactScreenState extends State<ContactScreen> {
                   Container(
                     width: 195,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() => GetContactsPage());
+                      },
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),

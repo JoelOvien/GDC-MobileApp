@@ -35,7 +35,11 @@ dependencies:
   flutter_svg: ^0.19.3
   feather_icons: 
   form_field_validator: ^1.1.0
-  
+  # contacts_service: ^0.4.6
+  permission_handler: '^3.2.0'
+  easy_contact_picker:
+  # path: ../
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter

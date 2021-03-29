@@ -152,12 +152,14 @@ class SignInScreen extends StatelessWidget {
                             backgroundColor: Theme.of(context).buttonColor,
                             primary: Theme.of(context).buttonColor),
                         onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            AuthVM().signIn(
-                              _emailController.text.toString(),
-                              _passwordController.text.toString(),
-                            );
-                          }
+                          Get.offAll(BottomNavBar());
+
+                          // if (_formKey.currentState.validate()) {
+                          //   AuthVM().signIn(
+                          //     _emailController.text.toString(),
+                          //     _passwordController.text.toString(),
+                          //   );
+                          // }
                         },
                         child: Text(
                           "Sign In",
