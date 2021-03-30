@@ -27,7 +27,7 @@ jobs:
   #       name: gitversion
   #       path: version.txt
   build:
-    name: Build APK
+    name: Build split APK
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
