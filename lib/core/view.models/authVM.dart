@@ -19,7 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthVM {
   Future<void> signIn(email, password) async {
     waitLoader();
-    var url = Uri.parse(API.$BASE_URL + Endpoints.login);
+    var url = API.$BASE_URL + Endpoints.login;
 
     print(url);
     Map body = {
@@ -28,9 +28,9 @@ class AuthVM {
     };
     print(body);
     try {
-      final ioc = new HttpClient();
-      ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-      final http = new IOClient(ioc);
+      // final ioc = new HttpClient();
+      // ioc.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+      // final http = new IOClient(ioc);
       final response = await http.post(
         url,
         headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -69,7 +69,7 @@ class AuthVM {
 
   Future<void> signUp(name, phone, email, password) async {
     waitLoader();
-    var url = Uri.parse(API.$BASE_URL + Endpoints.signUp);
+    var url = API.$BASE_URL + Endpoints.signUp;
 
     print(url);
     Map body = {
