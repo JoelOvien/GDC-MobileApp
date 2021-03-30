@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/margin.dart';
 
@@ -20,6 +21,17 @@ class _HomeState extends State<Home> {
     // String number = phoneNumber;
     // print(number);
     await FlutterPhoneDirectCaller.callNumber("07013504471");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getNAme();
+  }
+
+  getNAme() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    checkName = sharedPreferences.getString("userName");
   }
 
   @override
@@ -57,7 +69,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         Text(
-                          '$checkName',
+                          checkName == null ? "..." : '$checkName',
                           style: GoogleFonts.manrope(
                             fontSize: 21,
                             color: Colors.black,
