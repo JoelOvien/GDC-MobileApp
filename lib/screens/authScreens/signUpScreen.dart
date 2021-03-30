@@ -47,7 +47,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    "Shield",
+                    "EAS",
                     style: GoogleFonts.manrope(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,

@@ -1,8 +1,11 @@
 import 'dart:math';
 import 'package:eas/core/models/customContactModel.dart';
+import 'package:eas/core/models/fecthContactsModel.dart';
+import 'package:eas/core/view.models/contactsVM.dart';
 import 'package:eas/screens/getContactsPage.dart';
 import 'package:eas/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,9 +18,17 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
+  Future<FetchContactsModel> _future;
   @override
   void initState() {
     super.initState();
+    _future = ContactsVM().fetchUsersContacts();
+  }
+
+  _callNumber(String phoneNumber) async {
+    String number = phoneNumber;
+    print(number);
+    await FlutterPhoneDirectCaller.callNumber(number);
   }
 
   @override
@@ -35,22 +46,26 @@ class _ContactScreenState extends State<ContactScreen> {
         ),
         centerTitle: true,
         actions: [
-          contactList.length < 1
-              ? Container()
-              : IconButton(
-                  icon: Icon(
-                    Icons.add_circle,
-                    color: Color.fromRGBO(101, 7, 158, 1),
-                  ),
-                  onPressed: () {},
-                ),
+          IconButton(
+            icon: Icon(
+              Icons.add_circle,
+              color: Color.fromRGBO(101, 7, 158, 1),
+            ),
+            onPressed: () {
+              Get.to(() => GetContactsPage());
+            },
+          ),
         ],
       ),
-      body: contactList.length < 1
-          ? Container(
+      body: FutureBuilder<FetchContactsModel>(
+        future: _future,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container();
+          } else if (snapshot.data.emergencyContacts.isEmpty &&
+              snapshot.connectionState == ConnectionState.done) {
+            return Container(
               child: Column(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   YMargin(10),
                   Center(
@@ -106,76 +121,90 @@ class _ContactScreenState extends State<ContactScreen> {
                   ),
                 ],
               ),
-            )
-          : SingleChildScrollView(
-              child: Container(
-                child: Column(
-                  children: List.generate(7, (index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 4.0, bottom: 10, left: 15, right: 5),
-                      child: Container(
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor:
-                                  Colors.primaries[Random().nextInt(Colors.primaries.length)],
-                            ),
-                            XMargin(10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+            );
+          } else if (snapshot.data.emergencyContacts.isNotEmpty &&
+              snapshot.connectionState == ConnectionState.done) {
+            return RefreshIndicator(
+              onRefresh: () {
+                setState(() {
+                  _future = ContactsVM().fetchUsersContacts();
+                });
+              },
+              child: SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    children: List.generate(snapshot.data.emergencyContacts.length, (index) {
+                      var data = snapshot.data.emergencyContacts;
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 4.0, bottom: 10, left: 15, right: 5),
+                        child: Container(
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor:
+                                    Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                              ),
+                              XMargin(10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${data[index]}",
+                                      style: GoogleFonts.manrope(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 17,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    // Text(
+                                    //   "(702) 555-0122",
+                                    //   style: GoogleFonts.manrope(
+                                    //     fontWeight: FontWeight.w500,
+                                    //     fontSize: 14,
+                                    //     color: Color.fromRGBO(80, 80, 80, 1),
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                              Row(
                                 children: [
-                                  Text(
-                                    "Arlene McCoy",
-                                    style: GoogleFonts.manrope(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 17,
-                                      color: Colors.black,
+                                  GestureDetector(
+                                    onTap: () {
+                                      print("phone");
+                                      _callNumber(data[index]);
+                                    },
+                                    child: Icon(
+                                      Icons.phone,
+                                      color: Color.fromRGBO(101, 7, 158, 1),
                                     ),
                                   ),
-                                  Text(
-                                    "(702) 555-0122",
-                                    style: GoogleFonts.manrope(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: Color.fromRGBO(80, 80, 80, 1),
-                                    ),
-                                  ),
+                                  // SizedBox(width: 20),
+                                  // GestureDetector(
+                                  //   onTap: () {
+                                  //     print("video");
+                                  //   },
+                                  //   child: Icon(
+                                  //     Icons.video_call,
+                                  //     color: Color.fromRGBO(101, 7, 158, 1),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
-                            ),
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    print("phone");
-                                  },
-                                  child: Icon(
-                                    Icons.phone,
-                                    color: Color.fromRGBO(101, 7, 158, 1),
-                                  ),
-                                ),
-                                SizedBox(width: 20),
-                                GestureDetector(
-                                  onTap: () {
-                                    print("video");
-                                  },
-                                  child: Icon(
-                                    Icons.video_call,
-                                    color: Color.fromRGBO(101, 7, 158, 1),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            XMargin(20),
-                          ],
+                              XMargin(20),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+                  ),
                 ),
               ),
-            ),
+            );
+          }
+        },
+      ),
     );
   }
 }

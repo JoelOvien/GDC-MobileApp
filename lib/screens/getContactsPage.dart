@@ -1,6 +1,8 @@
 import 'package:eas/core/models/customContactModel.dart';
+import 'package:eas/core/view.models/contactsVM.dart';
 import 'package:easy_contact_picker/easy_contact_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class GetContactsPage extends StatefulWidget {
@@ -47,6 +49,9 @@ class _GetContactsPageState extends State<GetContactsPage> {
         child: Icon(Icons.save),
         onPressed: () {
           print(selectedNum);
+          if (selectedNum.isNotEmpty) {
+            ContactsVM().uploadUsersContacts(selectedNum);
+          }
         },
       ),
       appBar: AppBar(
@@ -154,9 +159,17 @@ class _SignUpGetContactsPageState extends State<SignUpGetContactsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromRGBO(245, 245, 245, 1),
         child: Icon(Icons.save),
         onPressed: () {
           print(selectedNum);
+          if (selectedNum.isNotEmpty) {
+            print(selectedNum);
+            // ContactsVM().uploadUsersContacts(selectedNum);
+          } else {
+            print("sfres");
+            Get.snackbar("No contacts", "Please select a contact");
+          }
         },
       ),
       appBar: AppBar(

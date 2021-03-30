@@ -1,10 +1,20 @@
 import 'package:eas/screens/getContactsPage.dart';
+import 'package:eas/screens/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/onBoarding.dart';
 
-void main() {
-  runApp(MyApp());
+var checkToken;
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  checkToken = sharedPreferences.getString("userName");
+  //I did this to lock the app in portrait mode
+  SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+      .then((value) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +42,8 @@ class MyApp extends StatelessWidget {
           elevation: 0.0,
         ),
       ),
-      home: OnBoarding(),
+      home: SplashScreen(),
+      //  OnBoarding(),
     );
   }
 }

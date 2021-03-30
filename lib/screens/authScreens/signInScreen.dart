@@ -43,7 +43,7 @@ class SignInScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 10),
                   Text(
-                    "Shield",
+                    "EAS",
                     style: GoogleFonts.manrope(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
@@ -122,6 +122,7 @@ class SignInScreen extends StatelessWidget {
                       ),
                       child: Center(
                         child: TextFormField(
+                          obscureText: true,
                           controller: _passwordController,
                           validator: MinLengthValidator(3, errorText: "Enter a valid password"),
                           decoration: InputDecoration(
@@ -152,14 +153,12 @@ class SignInScreen extends StatelessWidget {
                             backgroundColor: Theme.of(context).buttonColor,
                             primary: Theme.of(context).buttonColor),
                         onPressed: () {
-                          Get.offAll(BottomNavBar());
-
-                          // if (_formKey.currentState.validate()) {
-                          //   AuthVM().signIn(
-                          //     _emailController.text.toString(),
-                          //     _passwordController.text.toString(),
-                          //   );
-                          // }
+                          if (_formKey.currentState.validate()) {
+                            AuthVM().signIn(
+                              _emailController.text.toString(),
+                              _passwordController.text.toString(),
+                            );
+                          }
                         },
                         child: Text(
                           "Sign In",
