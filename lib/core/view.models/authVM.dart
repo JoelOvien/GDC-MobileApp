@@ -36,8 +36,9 @@ class AuthVM {
         headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
         body: json.encode(body),
       );
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        var jsonResponse = json.decode(response.body);
+      var jsonResponse = json.decode(response.body);
+
+      if (response.statusCode == 200 && jsonResponse['msg'] != "Wrong email or Password") {
         print(jsonResponse);
         SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
         await sharedPreferences.setString("userId", jsonResponse['user']['_id']);
@@ -52,10 +53,11 @@ class AuthVM {
           checkName = sharedPreferences.getString("userName");
         });
 
-        Future.delayed(Duration(milliseconds: 250), () {
+        Future.delayed(Duration(milliseconds: 1), () {
           Get.offAll(() => BottomNavBar());
         });
       } else {
+        showToast("Wrong email or password", Colors.red);
         print(response.statusCode.toString());
         print(response.body);
         Get.back();
