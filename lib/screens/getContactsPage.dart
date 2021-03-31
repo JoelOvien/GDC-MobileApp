@@ -1,5 +1,6 @@
 import 'package:eas/core/models/customContactModel.dart';
 import 'package:eas/core/view.models/contactsVM.dart';
+import 'package:eas/screens/splash.dart';
 import 'package:easy_contact_picker/easy_contact_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ class _GetContactsPageState extends State<GetContactsPage> {
   List<Contact> _list = [];
   final EasyContactPicker _contactPicker = new EasyContactPicker();
   List<String> selectedNum = [];
+  List<String> selectedName = [];
   _openAddressBook() async {
     //check permission status
     Map<PermissionGroup, PermissionStatus> permissions =
@@ -49,8 +51,13 @@ class _GetContactsPageState extends State<GetContactsPage> {
         child: Icon(Icons.save),
         onPressed: () {
           print(selectedNum);
+          print(selectedName);
+          // print("contacts: ");
+          // for (int i = 0; i < selectedNum.length; i++)
+          //  print("contacts: ${selectedNum[i]}");
+
           if (selectedNum.isNotEmpty) {
-            ContactsVM().uploadUsersContacts(selectedNum);
+            ContactsVM().uploadUsersContacts(selectedNum, selectedName);
           }
         },
       ),
@@ -79,9 +86,11 @@ class _GetContactsPageState extends State<GetContactsPage> {
                   if (_isChecked[index] != true) {
                     print("just selected");
                     selectedNum.add(_list[index].phoneNumber);
+                    selectedName.add(_list[index].fullName);
                   } else {
                     print("unselected");
                     selectedNum.remove(_list[index].phoneNumber);
+                    selectedName.remove(_list[index].fullName);
                   }
                   setState(() {
                     _isChecked[index] = val;
@@ -127,6 +136,7 @@ class _SignUpGetContactsPageState extends State<SignUpGetContactsPage> {
   List<Contact> _list = [];
   final EasyContactPicker _contactPicker = new EasyContactPicker();
   List<String> selectedNum = [];
+  List<String> selectedName = [];
   _openAddressBook() async {
     //check permission status
     Map<PermissionGroup, PermissionStatus> permissions =

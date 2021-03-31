@@ -150,11 +150,19 @@ class _ContactScreenState extends State<ContactScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "${data[index]}",
+                                      "${data[index].name}",
                                       style: GoogleFonts.manrope(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 17,
                                         color: Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      "${data[index].phone}",
+                                      style: GoogleFonts.manrope(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        color: Color.fromRGBO(80, 80, 80, 1),
                                       ),
                                     ),
                                     // Text(
@@ -173,7 +181,7 @@ class _ContactScreenState extends State<ContactScreen> {
                                   GestureDetector(
                                     onTap: () {
                                       print("phone");
-                                      _callNumber(data[index]);
+                                      _callNumber(data[index].phone);
                                     },
                                     child: Icon(
                                       Icons.phone,

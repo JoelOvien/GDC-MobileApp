@@ -3,8 +3,10 @@ import 'dart:io';
 
 import 'package:eas/core/api/api.dart';
 import 'package:eas/core/models/fecthContactsModel.dart';
+import 'package:eas/navigation/bottomNavBar.dart';
 import 'package:eas/screens/splash.dart';
 import 'package:eas/widgets/loadingDialog.dart';
+import 'package:eas/widgets/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/io_client.dart';
@@ -32,12 +34,19 @@ class ContactsVM {
     }
   }
 
-  Future<void> uploadUsersContacts(contacts) async {
+  Future<void> uploadUsersContacts(contacts, names) async {
     waitLoader();
     var url = Uri.parse(API.$BASE_URL + "users/addContacts");
 
     print(url);
-    Map body = {"contacts": contacts, "email": "$checkEmail"};
+    // Map body = {"contacts": contacts, "email": "$checkEmail"};
+    Map body = {
+      "contacts": [
+        for (int i = 0; i < contacts.length; i++) {'name': '${names[i]}', 'phone': '${contacts[i]}'}
+      ],
+      "email": "$checkEmail"
+    };
+    print(body);
     print(jsonEncode(body));
     try {
       final ioc = new HttpClient();
@@ -53,13 +62,15 @@ class ContactsVM {
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         print(response.statusCode.toString());
-        Get.back();
-        Get.back();
+        Get.offAll(() => BottomNavBar());
+        // Get.back();
+        // Get.back();
 
         print(response.body);
       } else {
         print(response.statusCode.toString());
         print(response.body);
+        showToast("Error encountered, try again", Colors.red);
         Get.back();
         Get.back();
       }

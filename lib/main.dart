@@ -42,8 +42,9 @@ class MyApp extends StatelessWidget {
           elevation: 0.0,
         ),
       ),
-      home: SplashScreen(),
-      //  OnBoarding(),
+      home:
+          // GetContactsPage(),
+          SplashScreen(),
     );
   }
 }

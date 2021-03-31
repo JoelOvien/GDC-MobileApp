@@ -38,8 +38,8 @@ class AuthVM {
       );
       var jsonResponse = json.decode(response.body);
 
-      if (response.statusCode == 200 && jsonResponse['msg'] != "Wrong email or Password") {
-        print(jsonResponse);
+      if (response.statusCode == 200 && jsonResponse['error'] != "Wrong email or password") {
+        // print(jsonResponse);
         SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
         await sharedPreferences.setString("userId", jsonResponse['user']['_id']);
         await sharedPreferences.setString("userName", jsonResponse['user']['name']);

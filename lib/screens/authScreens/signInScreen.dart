@@ -97,7 +97,7 @@ class SignInScreen extends StatelessWidget {
                         color: Color.fromRGBO(245, 245, 245, 1),
                       ),
                       child: TextFormField(
-                        validator: EmailValidator(errorText: "Enter a valid email"),
+                        // validator: EmailValidator(errorText: "Enter a valid email"),
                         controller: _emailController,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.person_outline, size: 20, color: Colors.black),
